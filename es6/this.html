@@ -4,27 +4,29 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <script>
 // #1 一個函式中包含多少參數
-var a = '全域'
-function fn(params) {
-  console.log(params, this, window, arguments);
-  debugger;
-}
+// var a = '全域'
+// function fn(params) {
+//   console.log(params, this, window, arguments);
+//   debugger;
+// }
+// fn("2個參數",2);
 
 // #2 this 的指向為何
 // var obj = {
 //   name: '小明',
 //   fn: function(params) {
 //     console.log(params, this, window, arguments);
-//     // debugger;
+//     debugger;
 //   }
 // }
+// obj.fn();
 
 // #3 注意：this 的指向相當複雜，大部分情境只需要了解其中一種即可(95%)
 // 傳統函式中的 this 只與調用方式有關
-// var someone = '全域';
-// function callSomeone() {
-//   console.log(this.someone);
-// }
+var someone = '全域';
+function callSomeone() {
+  console.log(this.someone);
+}
 // callSomeone();
 
 // #4 各種運用變化
@@ -50,6 +52,7 @@ function fn(params) {
 //     callSomeone,
 //   }
 // }
+// wrapObj.callSomeone();
 // wrapObj.innerObj.callSomeone();
 
 // var obj3 = {

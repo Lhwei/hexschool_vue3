@@ -44,7 +44,8 @@ console.log(obj.fn());
 // #3-1 不同陣列合併
 const groupA = ['小明', '杰倫', '阿姨'];
 const groupB = ['老媽', '老爸'];
-const groupAll = groupA.concat(groupB);
+// const groupAll = groupA.concat(groupB);
+const groupAll = [...groupA, ...groupB];
 
 // #3-2 物件擴展
 // 新增一個物件包含新方法，同時加入原有的方法
@@ -57,15 +58,23 @@ const methods = {
   },
 }
 
+const methods2 = {
+  fn(){
+    console.log(1);
+  },
+  ...methods
+}
+
 
 // #3-3 轉成純陣列
 const doms = document.querySelectorAll('li');
 console.log(doms); // 請轉為純陣列
-
+const newDoms = [...doms];
 
 // #4 預設值
-// function sum(a, b) { // 請加入預設值避免錯誤
-//   return a + b;
+// function sum(a, b = 2) { // 請加入預設值避免錯誤
+// if(!b){ b=2; }
+  //   return a + b;
 // }
 // console.log(sum(1));
 
