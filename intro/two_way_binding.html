@@ -4,22 +4,23 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 
 <div id="app">
+  {{ temp }}
   <form>
     <div class="mb-3">
       <label for="productName" class="form-label">產品名稱</label>
       <input type="text" id="productName"
-        class="form-control"
+        class="form-control" v-model="temp.name"
       >
     </div>
     <div class="mb-3">
-      <img src="https://images.unsplash.com/photo-1602526430780-782d6b1783fa?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" class="img-fluid" alt="">
+      <img v-bind:src="temp.imageUrl" class="img-fluid" alt="">
       <label for="productImage"
       class="form-label">產品圖片</label>
       <input type="text" id="productImage"
-        class="form-control"
+        class="form-control" v-model="temp.imageUrl"
       >
     </div>
-    <button type="button"
+    <button type="button" v-on:click="confirmEdit"
     class="btn btn-secondary">更新</button>
   </form>
 </div>
@@ -28,10 +29,16 @@
 const App = {
   data() {
     return {
-
+      temp:{
+        name: "",
+        imageUrl: ""
+      }
     }
   },
   methods: {
+    confirmEdit(){
+      console.log(this.temp);
+    }
   },
 };
 

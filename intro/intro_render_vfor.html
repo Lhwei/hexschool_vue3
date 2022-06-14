@@ -4,6 +4,11 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 
 <div id="app">
+  <div>
+    <button type="button" class="btn btn-primary" v-on:click="addItem">
+      新增
+    </button>
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -14,10 +19,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr></tr>
+      <tr v-for="item in products" :keys="item.id" v-bind:class="{'table-success': item.onStock}">
+        <th>{{item.name}}</th>
+        <th>
+          <img :src="item.imageUrl" alt="" srcset="">
+        </th>
+        <th>
+          <input type="checkbox" v-model="item.onStock" name="" id="">
+          <p v-if="item.onStock">有貨</p>
+          <p v-else>缺貨</p>
+        </th>
+        <th>
+          <button type="button" class="btn btn-outline-primary" v-on:click="editItem(item)">編輯</button>
+        </th>
+      </tr>
     </tbody>
   </table>
-  <form>
+  <form v-if="isNew || temp.id">
     <div class="mb-3">
       <label for="productName" class="form-label">產品名稱</label>
       <input type="text" id="productName"
@@ -57,16 +75,33 @@ const App = {
     return {
       products: [],
       temp: {
-        name: '卡斯伯',
-        imageUrl: 'https://images.unsplash.com/photo-1602526430780-782d6b1783fa?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-      }
+        name: '',
+        imageUrl: ''
+      },
+      isNew: false
     }
   },
   methods: {
+    addItem(){
+      this.isNew = true;
+      this.temp = {};
+    },
+    editItem(args){
+      this.temp = {...args};
+    },
     confirmEdit() {
-      this.temp.id = new Date().getTime();
-      this.temp.onStock = false;
-      this.products.push(this.temp);
+      if(!this.temp.id){
+        this.temp.id = new Date().getTime();
+        this.temp.onStock = false;
+        this.products.push(this.temp);
+      } else {
+        this.products.forEach((item, i) => {
+          if(item.id == this.temp.id)    {
+            this.products[i] = this.temp
+          }      
+        });
+      }
+      this.isNew = false;
       this.temp = {};
     }
   },
