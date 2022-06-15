@@ -28,7 +28,12 @@
             <div class="mb-3">
               <label for="productNum" class="form-label d-block">冰塊*</label>
               <div class="form-check form-check-inline" v-for="(ice, key) in iceType" :key="'ice' + key">
-                <input class="form-check-input" name="iceType" type="radio" :id="'ice' + key" :value="ice" v-model="tempSelected.ice" :disabled="!tempSelected.hasOwnProperty('defaults') || (tempSelected.defaults.ice !== '' && tempSelected.defaults.ice !== ice)">
+                
+                <input class="form-check-input" name="iceType" type="radio" :id="'ice' + key" :value="ice" v-model="tempSelected.ice" 
+                :disabled="!tempSelected.hasOwnProperty('defaults') || 
+                (tempSelected.defaults.ice !== '' && 
+                tempSelected.defaults.ice !== ice)" >
+                
                 <label class="form-check-label" :for="'ice' + key">{{ ice }}</label>
               </div>
             </div>
