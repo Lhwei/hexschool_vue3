@@ -17,13 +17,13 @@
   <button type="button" @click="callOtherMethod">呼叫另一個 methods</button>
 
   <h3>參數傳入</h3>
-  <button type="button" @click="methodParameter()">參數傳入</button>
+  <button type="button" @click="methodParameter('1',2,3, $event)">參數傳入</button>
 
   <h3>使用 methods 處理複雜資料</h3>
   <ul>
     <li v-for="product in products">
       {{ product.name }} / {{ product.price }}
-      <button type="button">加入購物車</button>
+      <button type="button" @click.prevent="addToCart(product)">加入購物車</button>
     </li>
   </ul>
   ...
@@ -32,10 +32,12 @@
     <li v-for="item in carts">{{ item.name }}</li>
   </ul>
   總金額 {{ sum }}
+  {{total}}
 
 
   <h3>作為 $filter 使用（取代複雜表達式）</h3>
-
+{{`NT${sum}`}}
+{{convertToAmount(sum)}}
 </div>
 
 <script>
@@ -69,32 +71,35 @@ const App = {
       sum: 0,
     }
   },
+  computed:{
+    total(){
+      let total = 0;
+      /* 當變數改變時就會連動 */ 
+      this.carts.forEach(item => {
+        total += item.price;
+      });
+      this.sum = total;
+    }
+  },
   methods: {
     trigger(name) {
       console.log(name, '此事件被觸發了')
     },
     callOtherMethod() {
-      // this.trigger('由 callOtherMethod 觸發')
+      this.trigger('由 callOtherMethod 觸發')
     },
     methodParameter(a, b, c, d) {
       console.log(a, b, c, d)
     },
-    // addToCart(product) {
-    //   this.carts.push(product)
-    // },
-    // calculate() {
-    //   let total = 0;
-    //   this.carts.forEach(item => {
-    //     total += item.price;
-    //   });
-    //   this.sum = total;
-    // },
-    // convertToAmount(price) {
-    //   return `NT$ ${price}`;
-    // }
+    addToCart(product) {
+      this.carts.push(product)
+    },
+    convertToAmount(price) {
+      return `NT$ ${price}`;
+    }
   },
   created() {
-    // this.trigger('由生命週期觸發');
+    this.trigger('由生命週期觸發');
   }
 };
 Vue.createApp(App).mount('#app');

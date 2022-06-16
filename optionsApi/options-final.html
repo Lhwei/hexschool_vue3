@@ -7,13 +7,13 @@
   <div class="row h-100">
     <div class="col-md-3 h-100 d-flex flex-column">
       <div class="form-floating mb-2">
-        <input type="text" class="form-control" id="search" placeholder="search">
+        <input type="text" v-model="search" class="form-control" id="search" placeholder="search">
         <label for="search">search</label>
       </div>
       <div class="list-group option">
-        <label class="list-group-item" >
+        <label class="list-group-item" v-for="(item, idx) in datastore" :key="item + idx">
           <input class="form-check-input me-1" type="radio" name="area">
-          {{ datastore.Name }}
+          {{ item.Name }}
         </label>
       </div>
     </div>
@@ -39,10 +39,6 @@
 
 <script>
 const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
-
-axios.get(apiUrl).then((res) => {
-  // 取得遠端資料
-})
 
 const App = {
   data() {
@@ -74,9 +70,34 @@ const App = {
         "Id": "C1_397000000A_000011"
       },
       cacheArea: '',
+      search: '',
       cacheSearch: '',
       browseLog: [],
     };
+  },
+  created() {
+    axios.get(apiUrl).then((res) => {
+      // 取得遠端資料
+      this.datastore = res.data.result.records
+    }).catch((err) => {
+      console.log(err);
+    });
+  },
+  mounted() {
+    
+  },
+  watch:{
+
+  },
+  computed:{
+    searchPlace(){
+      return this.datastore.filter( item => {
+        return item.Name.includes(this.search);
+      });
+    }
+  },
+  methods: {
+
   },
 };
 
